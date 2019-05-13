@@ -17,7 +17,7 @@ export default class MainScene extends ORE.BaseScene{
 
 	init(){
 		this.atrium = new Atrium();
-		this.scene.add(this.atrium._obj);
+		this.scene.add(this.atrium.obj);
 		this.camera.lookAt(0,0,0);
 	}
 

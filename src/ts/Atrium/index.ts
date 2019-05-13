@@ -9,13 +9,12 @@ export default class Atrium extends ORE.BaseObject{
 	private loader: GLTFLoader;
 	private uni: any;
 	private mat: THREE.ShaderMaterial;
-	public _obj: THREE.Object3D;
 	
 	constructor(){
 		super();
 
 		this.loader = new GLTFLoader();
-		this._obj = new THREE.Object3D();
+		this.obj = new THREE.Object3D();
 
 		this.uni = {
 			time:{
@@ -40,7 +39,7 @@ export default class Atrium extends ORE.BaseObject{
                 }
 			});
 			
-			this._obj.add(object);
+			this.obj.add(object);
 		});
 	}
 
