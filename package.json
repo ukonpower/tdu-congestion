@@ -12,6 +12,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.4.4",
     "babel-loader": "^8.0.5",
     "browser-sync": "^2.26.3",
     "del": "^3.0.0",
@@ -29,7 +30,7 @@
     "webpack-stream": "^5.2.1"
   },
   "dependencies": {
-    "ore-three-ts": "0.0.1",
+    "ore-three-ts": "0.0.2",
     "three": "^0.104.0",
     "three-gltf-loader": "^1.104.0"
   }

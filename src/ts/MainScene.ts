@@ -42,9 +42,16 @@ export default class MainScene extends ORE.BaseScene{
 		}
 	}
 
-    onTouchStart(cursor) { }
+    onTouchStart(e) { 
+	
+	}
 
-    onTouchMove(cursor) { }
+    onTouchMove(e) {
+		e.preventDefault();
+		
+	}
 
-    onTouchEnd(cursor) { }
+    onTouchEnd(e) {
+
+	}
 }
