@@ -13,6 +13,8 @@ export default class Atrium extends ORE.BaseObject{
 	constructor(){
 		super();
 
+		//test
+
 		this.loader = new GLTFLoader();
 		this.obj = new THREE.Object3D();
 
