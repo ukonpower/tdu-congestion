@@ -36,9 +36,10 @@ export class ObjectMover {
 	}
 
 	public move(position: THREE.Vector3 = null, rotation: THREE.Euler = null, duration: number = 1.0,callback?: Function) {
-		if(this.isMoving){
-			return;
-		}
+
+		// if(this.isMoving){
+		// 	return;
+		// }
 		
 		if (!position) {
 			position = this.objPos.clone();
