@@ -1,11 +1,10 @@
-import * as ORE from 'ore-three-ts';
 import * as THREE from 'three';
 import GLTFLoader from 'three-gltf-loader'
 
 import vert from './shaders/atrium.vs';
 import frag from './shaders/atrium.fs';
 
-export default class Atrium extends ORE.BaseObject{
+export default class Atrium extends THREE.Object3D{
 	private loader: GLTFLoader;
 	private uni: any;
 	private mat: THREE.ShaderMaterial;
@@ -16,7 +15,6 @@ export default class Atrium extends ORE.BaseObject{
 		//test
 
 		this.loader = new GLTFLoader();
-		this.obj = new THREE.Object3D();
 
 		this.uni = {
 			time:{
@@ -41,7 +39,7 @@ export default class Atrium extends ORE.BaseObject{
                 }
 			});
 			
-			this.obj.add(object);
+			this.add(object);
 		});
 	}
 
