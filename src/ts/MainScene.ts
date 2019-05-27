@@ -59,8 +59,6 @@ export default class MainScene extends ORE.BaseScene {
 	}
 
 	animate() {
-		this.renderer.render(this.scene, this.camera);
-
 		if (this.cController) {
 			this.cController.update();
 		}
@@ -69,6 +67,10 @@ export default class MainScene extends ORE.BaseScene {
 			this.atrium.update(this.time);
 		}
 		
+		this.camera.rotation.y = this.transforms.all.rot.y + this.mouse.x * -0.05;
+		this.camera.rotation.x = this.transforms.all.rot.x + this.mouse.y * 0.05;
+
+		this.renderer.render(this.scene, this.camera);		
 	}
 
 	onResize(width, height) {
@@ -83,11 +85,8 @@ export default class MainScene extends ORE.BaseScene {
 	}
 
 	onMouseMove(e: MouseEvent) {
-		this.mouse.set(e.x / window.innerWidth * 2.0 - 1, -(e.y / window.innerHeight) * 2 + 1);
-		this.camera.rotation.y = this.transforms.all.rot.y + this.mouse.x * -0.05;
-		this.camera.rotation.x = this.transforms.all.rot.x + this.mouse.y * 0.05;
 
-		console.log(this.camera.rotation);
+		this.mouse.set(e.x / window.innerWidth * 2.0 - 1, -(e.y / window.innerHeight) * 2 + 1);
 		
 	}
 
