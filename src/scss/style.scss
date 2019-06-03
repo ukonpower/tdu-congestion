@@ -1,4 +1,5 @@
 *{
+	color: white;
     margin: 0;
 }
 
@@ -6,9 +7,35 @@ html,body{
 	background-color: #000;
 	width: 100%;
 	height: 100%;
+	overflow: hidden;
 }
 
 #canvas{
+	position: absolute;
+	top: 0; left: 0;
 	width: 100%;
 	height: 100%;
+}
+
+.header{
+	position: absolute;
+	top: 0; left: 0;
+	padding: 25px 50px;
+	font-size: 30px;
+	z-index: 99;
+}
+
+.status{
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+
+	&-place{
+		position: absolute;
+		right: 0; bottom: 0;
+		padding: 20px 20px;
+		font-size: 30px;
+	}
 }
