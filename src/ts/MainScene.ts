@@ -3,14 +3,18 @@ import * as THREE from 'three';
 
 import NoisePostProcessing from './NoisePostProcessing';
 import Atrium from './Atrium';
+import Floor from './Floor/Floor';
+import BoxVisualiser from './BoxVisualizer';
 
+//global variables
 declare var data: any;
 
 export default class MainScene extends ORE.BaseScene {
 
 	private atrium: Atrium;
-	private r: number = 20;
-	private pY: number = 10;
+	private floor: Floor;
+	private boxVisual: BoxVisualiser;
+
 	private cController: ORE.TransformAnimator;
 	private raycaster: THREE.Raycaster;
 
@@ -68,20 +72,38 @@ export default class MainScene extends ORE.BaseScene {
 
 		}
 
+		//atrium
 		this.atrium = new Atrium();
-		
 		this.scene.add(this.atrium);
 		
+		//data floor
+		// this.floor = new Floor();
+		// this.scene.add(this.floor);
+
+		//box visualizer
+		this.boxVisual = new BoxVisualiser( 150, 80 );
+		this.boxVisual.position.y = -5.5;
+		this.scene.add( this.boxVisual );
+
+		//camera & controller
 		this.camera.position.copy(this.transforms.all.pos);
 		this.camera.rotation.copy(this.transforms.all.rot);
 		
 		this.cController = new ORE.TransformAnimator(this.camera);
 		this.cController.force = true;
 		
+		//lights
+		let light = new THREE.DirectionalLight();
+		this.scene.add( light );
+		let alight = new THREE.AmbientLight();
+		this.scene.add( alight );
+
+		//raycaster 
 		this.raycaster = new THREE.Raycaster();
 
 		this.mouse = new THREE.Vector2(0,0);
 
+		//post processing
 		this.pp = new NoisePostProcessing(this.renderer);
 
 	}
@@ -108,6 +130,18 @@ export default class MainScene extends ORE.BaseScene {
 			this.atrium.update(this.time);
 		
 		}
+
+		if ( this.floor ){
+
+			this.floor.update( this.time );
+
+		}
+
+		if ( this.boxVisual ){
+
+			this.boxVisual.update(this.time);
+		
+		}
 		
 		// this.camera.rotation.y = this.transforms.all.rot.y + this.mouse.x * -0.05;
 		// this.camera.rotation.x = this.transforms.all.rot.x + this.mouse.y * 0.05;
@@ -126,13 +160,7 @@ export default class MainScene extends ORE.BaseScene {
 	
 		if (width / height > 1.0) {
 	
-			this.r = 20;
-			this.pY = 10;
-	
 		} else {
-	
-			this.r = 30;
-			this.pY = 12;
 	
 		}
 	
@@ -167,7 +195,7 @@ export default class MainScene extends ORE.BaseScene {
 			
 				case 'atrium':
 					this.cController.move(pos , this.transforms.Atrium.rot, 2);
-					this.changeMeter(data);
+					this.changeMeter(0.5);
 					break;
 				case 'rounge':
 					this.cController.move(pos, this.transforms.Convini.rot, 2);
