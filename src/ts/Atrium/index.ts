@@ -12,8 +12,6 @@ export default class Atrium extends THREE.Object3D{
 	constructor(){
 		super();
 
-		//test
-
 		this.loader = new GLTFLoader();
 
 		this.uni = {
