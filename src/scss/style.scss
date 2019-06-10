@@ -53,8 +53,6 @@ html,body{
 
 	opacity: 0;
 	pointer-events: none;
-
-	transition: 2.0s;
 		
 	&.v {
 
@@ -92,11 +90,12 @@ html,body{
 			transition: 1s;
 
 			&-wrap{
+			
 				position: relative;
 				width: 50px;
 				height: 95%;
 				margin: 0 auto;
-			background-color: rgba($color: #fff, $alpha: 0.2);
+				background-color: rgba($color: #fff, $alpha: 0.2);
 
 			}
 

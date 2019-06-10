@@ -146,6 +146,7 @@ export default class MainScene extends ORE.BaseScene {
 
 	changeMeter(value: number){
 
+		(document.querySelector( '.status' ) as HTMLElement ).style.transition = '2s';
 		(document.querySelector( '.status-congestion-meter' ) as HTMLElement ).style.height = ( value * 100).toString() + '%';
 		(document.querySelector( '.status-congestion-percentage' ) as HTMLElement ).innerHTML = ( value * 100 ).toString() + '%';
 	}

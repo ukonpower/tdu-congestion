@@ -33,7 +33,7 @@ while($row = mysqli_fetch_array($res)){
 			<div class="status-congestion-meter-wrap">
 				<div class="status-congestion-meter"></div>
 			</div>
-			<div class="status-congestion-percentage">50%</div>
+			<div class="status-congestion-percentage">0%</div>
 		</div>
 	</div>
 
