@@ -4,6 +4,8 @@ import * as THREE from 'three';
 import NoisePostProcessing from './NoisePostProcessing';
 import Atrium from './Atrium';
 
+declare var data: any;
+
 export default class MainScene extends ORE.BaseScene {
 
 	private atrium: Atrium;
@@ -142,6 +144,12 @@ export default class MainScene extends ORE.BaseScene {
 		
 	}
 
+	changeMeter(value: number){
+
+		(document.querySelector( '.status-congestion-meter' ) as HTMLElement ).style.height = ( value * 100).toString() + '%';
+		(document.querySelector( '.status-congestion-percentage' ) as HTMLElement ).innerHTML = ( value * 100 ).toString() + '%';
+	}
+
 	onTouchStart(e) {
 
 		let m = new THREE.Vector2(this.cursor.x / window.innerWidth * 2.0 - 1, -(this.cursor.y / window.innerHeight) * 2 + 1);
@@ -153,16 +161,20 @@ export default class MainScene extends ORE.BaseScene {
 			
 			let pos = new THREE.Vector3().addVectors(intersects[i].object.position, new THREE.Vector3(0,15,20));
 			let name = intersects[i].object.name;
+
 			switch (name) {
 			
 				case 'atrium':
 					this.cController.move(pos , this.transforms.Atrium.rot, 2);
+					this.changeMeter(data);
 					break;
 				case 'rounge':
 					this.cController.move(pos, this.transforms.Convini.rot, 2);
+					this.changeMeter(0.5);
 					break;
 				case 'syokudo':
 					this.cController.move(pos, this.transforms.Syokudo.rot, 2);
+					this.changeMeter(0.7);
 					break;
 				default:
 			

@@ -19,6 +19,7 @@
     "glsl-shader-loader": "^0.1.6",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^5.0.0",
+    "gulp-connect-php": "^1.0.3",
     "gulp-cssmin": "^0.2.0",
     "gulp-plumber": "^1.2.1",
     "gulp-sass": "^4.0.2",
