@@ -4,11 +4,15 @@ uniform vec3 emissive;
 uniform float roughness;
 uniform float metalness;
 uniform float opacity;
+
 #ifndef STANDARD
 	uniform float clearCoat;
 	uniform float clearCoatRoughness;
 #endif
+
 varying vec3 vViewPosition;
+varying vec4 vColor;
+
 #ifndef FLAT_SHADED
 	varying vec3 vNormal;
 	#ifdef USE_TANGENT
@@ -43,7 +47,7 @@ varying vec3 vViewPosition;
 #include <clipping_planes_pars_fragment>
 void main() {
 	#include <clipping_planes_fragment>
-	vec4 diffuseColor = vec4( diffuse, opacity );
+	vec4 diffuseColor = vColor;
 	ReflectedLight reflectedLight = ReflectedLight( vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ) );
 	vec3 totalEmissiveRadiance = emissive;
 	#include <logdepthbuf_fragment>
@@ -62,7 +66,7 @@ void main() {
 	#include <lights_fragment_end>
 	#include <aomap_fragment>
 	vec3 outgoingLight = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse + reflectedLight.directSpecular + reflectedLight.indirectSpecular + totalEmissiveRadiance;
-	gl_FragColor = vec4( outgoingLight, 0.2 );
+	gl_FragColor = vec4( outgoingLight, vColor.a);
 	#include <tonemapping_fragment>
 	#include <encodings_fragment>
 	#include <fog_fragment>

@@ -5,14 +5,14 @@ import NoisePostProcessing from './NoisePostProcessing';
 import Atrium from './Atrium';
 import Floor from './Floor/Floor';
 import BoxVisualiser from './BoxVisualizer';
-import { CongestionData } from './CongestionData';
+import { CongestionDataFetcher, congestionData } from './CongestionDataFetcher';
 
 //global variables
 declare var data: any;
 
 export default class MainScene extends ORE.BaseScene {
 
-	private congestionData: CongestionData;
+	private congestionDataFetcher: CongestionDataFetcher;
 
 	private atrium: Atrium;
 	private floor: Floor;
@@ -43,7 +43,8 @@ export default class MainScene extends ORE.BaseScene {
 
 	init() {
 
-		this.congestionData = new CongestionData();
+		this.congestionDataFetcher = new CongestionDataFetcher();
+		this.congestionDataFetcher.onDataFetch = this.onDataFetch.bind(this);
 
 		this.transforms = {
 
@@ -86,8 +87,7 @@ export default class MainScene extends ORE.BaseScene {
 		// this.scene.add(this.floor);
 
 		//box visualizer
-		this.boxVisual = new BoxVisualiser(150, 80);
-		this.boxVisual.position.y = -5.5;
+		this.boxVisual = new BoxVisualiser( 80, 200, 1.5 );
 		this.scene.add(this.boxVisual);
 
 		//camera & controller
@@ -164,10 +164,10 @@ export default class MainScene extends ORE.BaseScene {
 
 	}
 
-	onMouseMove(e: MouseEvent) {
+	onDataFetch( data: congestionData ){
 
-		this.mouse.set(e.x / window.innerWidth * 2.0 - 1, -(e.y / window.innerHeight) * 2 + 1);
-
+		this.boxVisual.updateData( data );
+		
 	}
 
 	changeMeter(value: number) {
@@ -225,6 +225,12 @@ export default class MainScene extends ORE.BaseScene {
 	resetCamera(){
 
 		this.cController.move(this.transforms.all.pos, this.transforms.all.rot, 2);
+
+	}
+
+	onMouseMove(e: MouseEvent) {
+
+		this.mouse.set(e.x / window.innerWidth * 2.0 - 1, -(e.y / window.innerHeight) * 2 + 1);
 
 	}
 

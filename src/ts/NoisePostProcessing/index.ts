@@ -27,7 +27,8 @@ export default class NoisePostProcessing{
 			}
 		]
 
-		this.pp = new ORE.PostProcessing(this.renderer,this.ppParam)
+		this.pp = new ORE.PostProcessing(this.renderer,this.ppParam);
+		
 	}
 
 	update(time){

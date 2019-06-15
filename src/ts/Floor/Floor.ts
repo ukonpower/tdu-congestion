@@ -35,6 +35,8 @@ export default class Floor extends THREE.Object3D{
     }
 
     update( time: number ){
+
         this.uni.time.value = time;
+    
     }
 }
