@@ -10,7 +10,7 @@ export declare interface congestionData{
 
 export class CongestionDataFetcher {
 	
-	private data: congestionData;
+	public data: congestionData;
 
 	public onDataFetch: Function;
 

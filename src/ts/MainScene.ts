@@ -55,21 +55,21 @@ export default class MainScene extends ORE.BaseScene {
 
 			},
 
-			Atrium: {
+			atrium: {
 
 				pos: new THREE.Vector3(37, 20, 60),
 				rot: new THREE.Euler(-Math.PI / 5, 0, 0),
 
 			},
 
-			Convini: {
+			lounge: {
 
 				pos: new THREE.Vector3(-10, 20, 30),
 				rot: new THREE.Euler(-Math.PI / 6, 0, 0),
 
 			},
 
-			Syokudo: {
+			syokudo: {
 
 				pos: new THREE.Vector3(-40, 20, -20),
 				rot: new THREE.Euler(-Math.PI / 6, 0, 0),
@@ -87,7 +87,7 @@ export default class MainScene extends ORE.BaseScene {
 		// this.scene.add(this.floor);
 
 		//box visualizer
-		this.boxVisual = new BoxVisualiser( 80, 200, 1.5 );
+		this.boxVisual = new BoxVisualiser( 50, 200, 2.0 );
 		this.scene.add(this.boxVisual);
 
 		//camera & controller
@@ -146,6 +146,8 @@ export default class MainScene extends ORE.BaseScene {
 
 			this.pp.render(this.scene, this.camera);
 
+		}else{
+
 			this.renderer.render(this.scene, this.camera);
 
 		}
@@ -167,7 +169,7 @@ export default class MainScene extends ORE.BaseScene {
 	onDataFetch( data: congestionData ){
 
 		this.boxVisual.updateData( data );
-		
+
 	}
 
 	changeMeter(value: number) {
@@ -175,6 +177,7 @@ export default class MainScene extends ORE.BaseScene {
 		(document.querySelector('.status') as HTMLElement).style.transition = '2s';
 		(document.querySelector('.status-congestion-meter') as HTMLElement).style.height = (value * 100).toString() + '%';
 		(document.querySelector('.status-congestion-percentage') as HTMLElement).innerHTML = (value * 100).toString() + '%';
+
 	}
 
 	showStatus(name: string) {
@@ -193,32 +196,26 @@ export default class MainScene extends ORE.BaseScene {
 
 	switchLocation(name: string) {
 
-		let pos = new THREE.Vector3().addVectors( this.scene.getObjectByName(name).position, new THREE.Vector3(0, 15, 20));
-		console.log(name);
+		let obj = this.scene.getObjectByName(name);
+		if( !obj ) return;
+
+		if( name == 'rounge' ) name = 'lounge';
+
+		if( !this.transforms[name] ){
+
+			console.warn( 'transform data ga naiyo' );
+			return;
 		
-		switch (name) {
-
-			case 'atrium':
-				this.cController.move(pos, this.transforms.Atrium.rot, 2);
-				this.changeMeter(0.5);
-				break;
-
-			case 'rounge':
-				this.cController.move(pos, this.transforms.Convini.rot, 2);
-				this.changeMeter(0.5);
-				break;
-
-			case 'syokudo':
-				this.cController.move(pos, this.transforms.Syokudo.rot, 2);
-				this.changeMeter(0.7);
-				break;
-
-			default:
 		}
+		
+		let pos = new THREE.Vector3().addVectors( obj.position, new THREE.Vector3(0, 15, 20));
+		let rot = this.transforms[name].rot;
 
-		if (name != 'map') {
-			this.showStatus(name);
-		}
+		this.cController.move( pos, rot, 2 );
+
+		this.changeMeter( this.congestionDataFetcher.data[name][0] );
+		
+		this.showStatus(name);
 
 	}
 
@@ -252,7 +249,9 @@ export default class MainScene extends ORE.BaseScene {
 
 			}else{
 
-				this.resetCamera(); 
+				this.resetCamera();
+
+				this.hideStatus();
 
 			}
 
@@ -261,6 +260,8 @@ export default class MainScene extends ORE.BaseScene {
 		if( intersects.length == 0 ){
 
 			this.resetCamera();
+
+			this.hideStatus();
 
 		}
 

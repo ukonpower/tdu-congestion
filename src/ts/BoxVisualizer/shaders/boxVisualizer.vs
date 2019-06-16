@@ -29,7 +29,8 @@ void main() {
     f += max( 0.0, 1.0 - length(syokudoPos - offsetUV) * range) * syokudoW;
 
     //scale
-    pos.y *= 1.0;
+    float n = (snoise(vec3(offsetUV * 15.0,time * 0.05)) + 1.0 ) / 2.0;
+    pos.y *= f * 50.0 * n;
 
     //offset
     pos.y -= 5.0;
@@ -39,7 +40,9 @@ void main() {
     vViewPosition = -mvPosition.xyz;
 
     float baseAlpha = max( 0.0, 1.0 - length(offsetUV * 2.0 - 1.0) );
-    float alpha = f * 0.6 + 0.1 * baseAlpha;
-    vColor = vec4(1.0,1.0,1.0,alpha);
+    float alpha = (f * 0.6 + baseAlpha * 0.3) * 0.6;
+
+    vec3 c = mix( vec3(0.0,0.8,1.0), vec3(1.0,0.2,0.2), f + 0.2);
+    vColor = vec4( c, alpha );
 
 }

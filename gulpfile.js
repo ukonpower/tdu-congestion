@@ -7,6 +7,7 @@ const autoprefixer = require('gulp-autoprefixer');
 const plumber = require('gulp-plumber');
 const sass = require('gulp-sass');
 const cssmin = require('gulp-cssmin');
+const connect = require('gulp-connect-php');
 const del = require('del');
 const minimist = require('minimist');
 
@@ -51,12 +52,15 @@ gulp.task('copy', function(c){
 });
 
 gulp.task('browser-sync',function(){
-    browserSync.init({
-        server: {
-            baseDir: "public",
-            index: "index.html"
-        },
-        open: true
+    connect.server({
+        port: 8001,
+        base: './public',
+        bin: 'C:/Users/ukonpower/Documents/System/php-7.2.19-Win32-VC15-x64/php.exe',
+        ini: 'C:/Users/ukonpower/Documents/System/php-7.2.19-Win32-VC15-x64/php.ini'
+    }, function(){
+        browserSync({
+            proxy: 'localhost:8001'
+        });
     });
 });
 

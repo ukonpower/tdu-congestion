@@ -89,7 +89,8 @@ export default class BoxVisualizer extends THREE.Object3D {
             uniforms: this.uni,
             flatShading: true,
             lights: true,
-            transparent: true
+            transparent: true,
+            depthTest: false
         })
 
         this.frustumCulled = false;
@@ -106,7 +107,7 @@ export default class BoxVisualizer extends THREE.Object3D {
     }
 
     updateData( data: congestionData ){
-
+        
         this.uni.atriumW.value = data.atrium[0];
         this.uni.loungeW.value = data.lounge[0];
         this.uni.syokudoW.value = data.syokudo[0];
