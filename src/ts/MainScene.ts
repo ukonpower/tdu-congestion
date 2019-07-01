@@ -18,8 +18,15 @@ export default class MainScene extends ORE.BaseScene {
 	private floor: Floor;
 	private boxVisual: BoxVisualiser;
 
+	
+	private isFocus: boolean = false;
 	private cController: ORE.TransformAnimator;
 	private raycaster: THREE.Raycaster;
+	private radian: number = 0;
+	private radius: number = 20;
+	private targetPos: THREE.Vector3;
+	private targetRot: THREE.Vector3;
+	private rotateSpeed: number = 0.0;
 
 	private transforms: any;
 
@@ -34,6 +41,7 @@ export default class MainScene extends ORE.BaseScene {
 		this.name = "MainScene";
 
 		window.addEventListener('mousemove', this.onMouseMove.bind(this));
+		document.querySelector('.status-back').addEventListener( 'click', this.resetCamera.bind(this) );
 
 		this.init();
 		
@@ -110,6 +118,21 @@ export default class MainScene extends ORE.BaseScene {
 	}
 
 	animate() {
+		
+		if( this.isFocus ){
+
+			this.rotateSpeed *= 0.98;
+			this.radian += this.rotateSpeed;
+
+			let baseQ = new THREE.Quaternion().setFromEuler( new THREE.Euler().setFromVector3( this.targetRot ) );
+			let q = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3( 0, 1, 0 ), this.radian ).multiply( baseQ );
+			
+			this.camera.quaternion.copy( q );
+
+			this.camera.position.x = this.targetPos.x + Math.sin( this.radian ) * this.radius;
+			this.camera.position.z = this.targetPos.z + Math.cos( this.radian ) * this.radius;
+
+		}
 
 		if (this.cController) {
 
@@ -121,7 +144,7 @@ export default class MainScene extends ORE.BaseScene {
 
 			this.atrium.update(this.time);
 
-		}
+		}	
 
 		if (this.floor) {
 
@@ -210,8 +233,11 @@ export default class MainScene extends ORE.BaseScene {
 
 	switchLocation(name: string) {
 
+		if( this.isFocus )return;
+
 		let obj = this.scene.getObjectByName(name);
 		if( !obj ) return;
+
 
 		if( name == 'rounge' ) name = 'lounge';
 
@@ -222,10 +248,18 @@ export default class MainScene extends ORE.BaseScene {
 		
 		}
 		
-		let pos = new THREE.Vector3().addVectors( obj.position, new THREE.Vector3(0, 15, 20));
+		let pos = new THREE.Vector3().addVectors( obj.position, new THREE.Vector3(0, 15, this.radius));
 		let rot = this.transforms[name].rot;
 
-		this.cController.move( pos, rot, 2 );
+		this.targetPos = obj.position;
+		this.targetRot = rot;
+
+		this.cController.move( pos, rot, 2 , () => {			
+			this.isFocus = true;
+			this.radian = 0;
+			this.radius = 20;
+			this.rotateSpeed = 0.0;
+		} );
 
 		this.changeMeter( this.congestionDataFetcher.data[name][0] );
 		
@@ -235,13 +269,16 @@ export default class MainScene extends ORE.BaseScene {
 
 	resetCamera(){
 
-		this.cController.move(this.transforms.all.pos, this.transforms.all.rot, 2);
+		this.isFocus = false;
+		this.cController.move( this.transforms.all.pos, this.transforms.all.rot, 2, ()=>{});
+		this.hideStatus();
 
 	}
 
 	onMouseMove(e: MouseEvent) {
 
 		this.mouse.set(e.x / window.innerWidth * 2.0 - 1, -(e.y / window.innerHeight) * 2 + 1);
+		
 
 	}
 
@@ -261,27 +298,15 @@ export default class MainScene extends ORE.BaseScene {
 				//move camera
 				this.switchLocation( name );
 
-			}else{
-
-				this.resetCamera();
-
-				this.hideStatus();
-
 			}
-
-		}
-
-		if( intersects.length == 0 ){
-
-			this.resetCamera();
-
-			this.hideStatus();
 
 		}
 
 	}
 
 	onTouchMove(e) {
+		
+		this.rotateSpeed -= this.cursor.deltaX * 0.0005;
 
 		e.preventDefault();
 

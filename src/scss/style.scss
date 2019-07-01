@@ -44,7 +44,7 @@ html,body{
 	z-index: 99;
 
 	@include sp{
-		padding: 15px 5%;
+		padding: 10px 5%;
 		font-size: 25px;
 	}
 }
@@ -63,7 +63,7 @@ html,body{
 	&.v {	
 
 		opacity: 1.0;
-		pointer-events: none;
+		pointer-events: all;
 	}
 
 	&-place{
@@ -73,7 +73,7 @@ html,body{
 		font-size: 60px;
 
 		@include sp{
-			padding: 40px 50px;
+			padding: 20px 20px;
 			font-size: 40px;
 		}
 	}
@@ -84,15 +84,19 @@ html,body{
 		right: 2%; top: 55%;
 		transform: translateY(-50%);
 
-		height: 70%;
+		height: 80%;
 		width: 100px;
-		margin: 10px;
+
+		@include sp{
+			right: 0;
+			width: 80px;
+		}
 
 		&-meter{
 			position: absolute;
 			background-color: rgba($color: #fff, $alpha: 0.4);			
 
-			left: 0;
+			right: 0;
 			bottom: 0;
 
 			width: 100%;
@@ -102,7 +106,7 @@ html,body{
 			&-wrap{
 			
 				position: relative;
-				width: 50px;
+				width: 50%;
 				height: 95%;
 				margin: 0 auto;
 				background-color: rgba($color: #fff, $alpha: 0.2);
@@ -115,6 +119,49 @@ html,body{
 			text-align: center;
 			font-size: 15px;
 			margin: 10px;
+		}
+	}
+
+	&-back{
+
+		background-color: transparent;
+        border: none;
+        cursor: pointer;
+        outline: none;
+		appearance: none;
+		
+		position: absolute;
+		left: 0; top: 13%;
+		margin: 0px 70px;
+		padding-left: 18;
+		font-size: 30px;
+
+		background: none;
+
+		@include sp{
+			top: 12%;
+			margin: 0 20px;
+			font-size: 20px;
+			padding-left: 12px;
+		}
+
+		&::before{
+			content: '';
+			width: 10px;
+			height: 10px;
+			border: 0px;
+			border-top: solid 2px white;
+			border-right: solid 2px white;
+			transform: rotate(-135deg);
+			position: absolute;
+			top: 50%;
+			left: 0;
+			margin-top: -4px;
+
+			@include sp{
+				width: 8px;
+				height: 8px;
+			}
 		}
 	}
 }
