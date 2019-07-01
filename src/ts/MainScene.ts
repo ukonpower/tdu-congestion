@@ -24,7 +24,7 @@ export default class MainScene extends ORE.BaseScene {
 	private raycaster: THREE.Raycaster;
 	private radian: number = 0;
 	private radius: number = 20;
-	private targetPos: THREE.Vector3;
+	private targetObj: THREE.Object3D;
 	private targetRot: THREE.Vector3;
 	private rotateSpeed: number = 0.0;
 
@@ -130,8 +130,8 @@ export default class MainScene extends ORE.BaseScene {
 			
 			this.camera.quaternion.copy( q );
 
-			this.camera.position.x = this.targetPos.x + Math.sin( this.radian ) * this.radius;
-			this.camera.position.z = this.targetPos.z + Math.cos( this.radian ) * this.radius;
+			this.camera.position.x = this.targetObj.position.x + Math.sin( this.radian ) * this.radius;
+			this.camera.position.z = this.targetObj.position.z + Math.cos( this.radian ) * this.radius;
 
 		}
 
@@ -212,7 +212,7 @@ export default class MainScene extends ORE.BaseScene {
 
 	changeMeter(value: number) {
 
-		(document.querySelector('.status') as HTMLElement).style.transition = '2s';
+		(document.querySelector('.status') as HTMLElement).style.transition = '1s';
 		(document.querySelector('.status-congestion-meter') as HTMLElement).style.height = (value * 100).toString() + '%';
 		(document.querySelector('.status-congestion-percentage') as HTMLElement).innerHTML = (value * 100).toString() + '%';
 
@@ -234,11 +234,10 @@ export default class MainScene extends ORE.BaseScene {
 
 	switchLocation(name: string) {
 
-		if( this.isFocus )return;
-
 		let obj = this.scene.getObjectByName(name);
 		if( !obj ) return;
 
+		if( obj == this.targetObj ) return;
 
 		if( name == 'rounge' ) name = 'lounge';
 
@@ -252,7 +251,7 @@ export default class MainScene extends ORE.BaseScene {
 		let pos = new THREE.Vector3().addVectors( obj.position, new THREE.Vector3(0, 15, this.radius));
 		let rot = this.transforms[name].rot;
 
-		this.targetPos = obj.position;
+		this.targetObj = obj;
 		this.targetRot = rot;
 
 		this.cController.move( pos, rot, 2 , () => {			
