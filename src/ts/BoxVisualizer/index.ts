@@ -81,7 +81,7 @@ export default class BoxVisualizer extends THREE.Object3D {
 
         this.uni = THREE.UniformsUtils.merge([THREE.ShaderLib.standard.uniforms,cUni]);
         this.uni.diffuse.value = new THREE.Vector3(1.0,1.0,1.0);
-        this.uni.roughness.value = 0.1;
+        this.uni.roughness.value = 1.0;
 
         let mat = new THREE.ShaderMaterial({
             vertexShader: vert,
