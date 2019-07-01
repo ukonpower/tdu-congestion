@@ -19,7 +19,7 @@ void main() {
     pos.y += 0.5;
 
     vec2 atriumPos = vec2(0.68,0.65);
-    vec2 loungePos = vec2(0.44,0.46);
+    vec2 loungePos = vec2(0.44,0.43);
     vec2 syokudoPos = vec2(0.3,0.25);
 
     float f = 0.0;

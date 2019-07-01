@@ -82,10 +82,6 @@ export default class MainScene extends ORE.BaseScene {
 		this.atrium = new Atrium();
 		this.scene.add(this.atrium);
 
-		//data floor
-		// this.floor = new Floor();
-		// this.scene.add(this.floor);
-
 		//box visualizer
 		this.boxVisual = new BoxVisualiser( 50, 200, 2.0 );
 		this.scene.add(this.boxVisual);
@@ -155,8 +151,6 @@ export default class MainScene extends ORE.BaseScene {
 	}
 
 	onResize(width, height) {
-
-		console.log( this.camera.fov );
 		
 		super.onResize(width, height);
 
@@ -164,6 +158,9 @@ export default class MainScene extends ORE.BaseScene {
 
 			//pc
 			
+			this.transforms.all.pos = new THREE.Vector3(0, 150, -20),
+			this.transforms.all.rot = new THREE.Euler(-Math.PI / 2, 0, 0),
+						
 			this.camera.fov = 60.0;
 
 
@@ -171,17 +168,19 @@ export default class MainScene extends ORE.BaseScene {
 
 			//phone 
 			
+			this.transforms.all.pos = new THREE.Vector3(0, 130, -20),
+			this.transforms.all.rot = new THREE.Euler(-Math.PI / 2, 0, 0),
 			this.camera.fov = 90.0;
 
 		}
 
+		
+		this.resetCamera();
 		this.camera.updateProjectionMatrix();
 
 	}
 
 	onDataFetch( data: congestionData ){
-
-		console.log(data);
 		
 		this.boxVisual.updateData( data );
 
@@ -199,7 +198,7 @@ export default class MainScene extends ORE.BaseScene {
 
 		document.querySelector('.status').classList.add('v');
 
-		document.querySelector('.status-place').innerHTML = name;
+		document.querySelector('.status-place').innerHTML = name.toLocaleUpperCase();
 
 	}
 
