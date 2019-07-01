@@ -35,9 +35,9 @@ export default class MainScene extends ORE.BaseScene {
 
 		window.addEventListener('mousemove', this.onMouseMove.bind(this));
 
-		this.onResize(window.innerWidth, window.innerHeight);
-
 		this.init();
+		
+		this.onResize(window.innerWidth, window.innerHeight);
 
 	}
 
@@ -156,18 +156,33 @@ export default class MainScene extends ORE.BaseScene {
 
 	onResize(width, height) {
 
+		console.log( this.camera.fov );
+		
 		super.onResize(width, height);
 
 		if (width / height > 1.0) {
 
+			//pc
+			
+			this.camera.fov = 60.0;
+
+
 		} else {
 
+			//phone 
+			
+			this.camera.fov = 90.0;
+
 		}
+
+		this.camera.updateProjectionMatrix();
 
 	}
 
 	onDataFetch( data: congestionData ){
 
+		console.log(data);
+		
 		this.boxVisual.updateData( data );
 
 	}

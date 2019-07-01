@@ -24,9 +24,10 @@ export class CongestionDataFetcher {
 
 		this.fetchData();
 
-		setInterval(()=>{
-			this.fetchData.bind(this);
-		},5000)
+		setInterval( 
+			this.fetchData.bind(this), 
+			5000 
+		);
 		
 	}
 
@@ -36,7 +37,7 @@ export class CongestionDataFetcher {
 			
 			url: 'php/fetch_data.php',
 			
-			dataType: 'json', 
+			dataType: 'json', 	
 
 		}).done((data) => {
 			

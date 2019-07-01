@@ -1,4 +1,5 @@
 <?php
+
     header("Content-Type: application/json; charset=UTF-8");
 
     $data = [];
@@ -29,6 +30,6 @@
     $data['lounge'] = $lounge;
     $data['syokudo'] = $syokudo;
     echo json_encode($data);
-exit;
 
+    exit;
 ?>  
