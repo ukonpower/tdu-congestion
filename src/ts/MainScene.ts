@@ -40,13 +40,14 @@ export default class MainScene extends ORE.BaseScene {
 
 		this.name = "MainScene";
 
-		window.addEventListener('mousemove', this.onMouseMove.bind(this));
-		document.querySelector('.status-back').addEventListener( 'click', this.resetCamera.bind(this) );
+		window.addEventListener( 'mousemove', this.onMouseMove.bind( this ) );
+		document.querySelector( '.status-back').addEventListener( 'click', this.resetCamera.bind(this) );
 
 		this.init();
 		
 		this.onResize(window.innerWidth, window.innerHeight);
 
+		document.querySelector( '.loading' ).classList.add( 'rm' );
 	}
 
 	init() {

@@ -34,6 +34,31 @@ html,body{
 	height: 100%;
 }
 
+.loading{
+	
+	position: absolute;
+	display: flex;
+	flex-direction: column; /* 子要素をflexboxにより縦方向に揃える */
+    justify-content: center; /* 子要素をflexboxにより中央に配置する */
+	align-items: center;  /* 子要素をflexboxにより中央に配置する */
+	
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index: 999;
+
+
+	&.rm{
+		opacity: 0;
+		transition: 1s;
+		pointer-events: none;
+	}
+
+	p{
+		font-size: 25px;
+	}
+}
+
 .header{
 	position: relative;
 	top: 0; left: 0;
@@ -41,7 +66,7 @@ html,body{
 	padding: 20px 5%;
 	font-size: 30px;
 	background-color: rgba($color: #000000, $alpha: 0.5);
-	z-index: 99;
+	z-index: 9;
 
 	@include sp{
 		padding: 10px 5%;
