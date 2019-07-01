@@ -198,8 +198,11 @@ export default class MainScene extends ORE.BaseScene {
 
 		}
 
-		
-		this.resetCamera();
+		if( !this.isFocus ){
+
+			this.resetCamera();
+			
+		}
 		this.camera.updateProjectionMatrix();
 
 	}
