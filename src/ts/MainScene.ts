@@ -6,9 +6,16 @@ import Atrium from './Atrium';
 import Floor from './Floor/Floor';
 import BoxVisualiser from './BoxVisualizer';
 import { CongestionDataFetcher, congestionData } from './CongestionDataFetcher';
+import TouchUI from './TouchUI/TouchUI';
 
 //global variables
 declare var data: any;
+
+declare interface TouchUIs{
+	atrium: TouchUI,
+	lounge: TouchUI,
+	syokudo: TouchUI,
+}
 
 export default class MainScene extends ORE.BaseScene {
 
@@ -33,6 +40,12 @@ export default class MainScene extends ORE.BaseScene {
 	private pp: NoisePostProcessing;
 
 	private mouse: THREE.Vector2;
+
+	private touchUis: TouchUIs = {
+		atrium: new TouchUI(),
+		lounge: new TouchUI(),
+		syokudo: new TouchUI(),
+	}
 
 	constructor(renderer) {
 
@@ -89,6 +102,23 @@ export default class MainScene extends ORE.BaseScene {
 
 		//atrium
 		this.atrium = new Atrium();
+
+		this.atrium.onLoad = () => {
+
+			let keys = Object.keys( this.touchUis );
+			
+			this.touchUis.atrium.position.copy( this.scene.getObjectByName('atrium').position );
+			this.touchUis.lounge.position.copy( this.scene.getObjectByName('rounge').position );
+			this.touchUis.syokudo.position.copy( this.scene.getObjectByName('syokudo').position );
+
+			keys.forEach( (key) => {
+
+				this.scene.add( this.touchUis[key] );
+
+			});
+
+		}		
+
 		this.scene.add(this.atrium);
 
 		//box visualizer
@@ -172,6 +202,12 @@ export default class MainScene extends ORE.BaseScene {
 
 		}
 
+		let keys = Object.keys( this.touchUis );
+		keys.forEach( (key) => {
+
+			this.touchUis[key].update( this.time, this.camera.position.y );
+
+		});
 	}
 
 	onResize(width, height) {

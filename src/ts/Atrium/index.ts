@@ -8,6 +8,7 @@ export default class Atrium extends THREE.Object3D{
 	private loader: GLTFLoader;
 	private uni: any;
 	private mat: THREE.ShaderMaterial;
+	public onLoad: Function;
 	
 	constructor(){
 		super();
@@ -34,10 +35,16 @@ export default class Atrium extends THREE.Object3D{
                 if (child.isMesh) {
 					child.receiveShadow = true;
 					child.material = this.mat;
-                }
+				}
 			});
 			
 			this.add(object);
+
+			if( this.onLoad ){
+
+				this.onLoad();
+
+			}
 		});
 	}
 
