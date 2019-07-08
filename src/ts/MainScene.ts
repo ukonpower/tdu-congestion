@@ -3,7 +3,6 @@ import * as THREE from 'three';
 
 import NoisePostProcessing from './NoisePostProcessing';
 import Atrium from './Atrium';
-import Floor from './Floor/Floor';
 import BoxVisualiser from './BoxVisualizer';
 import { CongestionDataFetcher, congestionData } from './CongestionDataFetcher';
 import TouchUI from './TouchUI/TouchUI';
@@ -22,7 +21,6 @@ export default class MainScene extends ORE.BaseScene {
 	private congestionDataFetcher: CongestionDataFetcher;
 
 	private atrium: Atrium;
-	private floor: Floor;
 	private boxVisual: BoxVisualiser;
 
 	
@@ -175,14 +173,8 @@ export default class MainScene extends ORE.BaseScene {
 
 			this.atrium.update(this.time);
 
-		}	
-
-		if (this.floor) {
-
-			this.floor.update(this.time);
-
 		}
-
+		
 		if (this.boxVisual) {
 
 			this.boxVisual.update(this.time);
@@ -244,6 +236,7 @@ export default class MainScene extends ORE.BaseScene {
 	}
 
 	onDataFetch( data: congestionData ){
+		
 		
 		this.boxVisual.updateData( data );
 
@@ -310,6 +303,7 @@ export default class MainScene extends ORE.BaseScene {
 
 		this.isFocus = false;
 		this.cController.move( this.transforms.all.pos, this.transforms.all.rot, 2, ()=>{});
+		this.targetObj = null;
 		this.hideStatus();
 
 	}
