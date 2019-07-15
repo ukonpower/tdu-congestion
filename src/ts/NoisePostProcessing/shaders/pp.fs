@@ -37,7 +37,7 @@ void main(void){
 
     c /= float(N) - 3.0;
 
-	c += random(uv + random(vec2(time))) * (0.02 + 0.15);
+	c += random(uv + random(vec2(time))) * (0.12);
 
 	gl_FragColor = vec4(c,1.0);
 }

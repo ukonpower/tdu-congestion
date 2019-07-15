@@ -70,8 +70,8 @@ export default class MainScene extends ORE.BaseScene {
 
 			all: {
 
-				pos: new THREE.Vector3(0, 70, 100),
-				rot: new THREE.Euler(-Math.PI / 5, 0, 0),
+				pos: new THREE.Vector3(-5, 70, 100),
+				rot: new THREE.Euler(-Math.PI / 5, 0.0, 0),
 
 			},
 
@@ -220,7 +220,7 @@ export default class MainScene extends ORE.BaseScene {
 
 			//phone 
 			
-			this.transforms.all.pos = new THREE.Vector3(0, 130, -20),
+			this.transforms.all.pos = new THREE.Vector3(-5, 130, -20),
 			this.transforms.all.rot = new THREE.Euler(-Math.PI / 2, 0, 0),
 			this.camera.fov = 90.0;
 
