@@ -20,7 +20,7 @@ void main() {
 
     vec2 atriumPos = vec2(0.68,0.65);
     vec2 loungePos = vec2(0.44,0.43);
-    vec2 syokudoPos = vec2(0.3,0.25);
+    vec2 syokudoPos = vec2(0.25,0.30);
 
     float f = 0.0;
     float range = 10.0;

@@ -106,7 +106,7 @@ export default class MainScene extends ORE.BaseScene {
 			let keys = Object.keys( this.touchUis );
 			
 			this.touchUis.atrium.position.copy( this.scene.getObjectByName('atrium').position );
-			this.touchUis.lounge.position.copy( this.scene.getObjectByName('rounge').position );
+			this.touchUis.lounge.position.copy( this.scene.getObjectByName('lounge').position );
 			this.touchUis.syokudo.position.copy( this.scene.getObjectByName('syokudo').position );
 
 			keys.forEach( (key) => {
@@ -240,6 +240,16 @@ export default class MainScene extends ORE.BaseScene {
 		
 		this.boxVisual.updateData( data );
 
+		if( this.isFocus ){
+
+			let name = this.targetObj.name;
+			
+			let data = this.congestionDataFetcher.data[ name ][0];
+			
+			this.changeMeter( data );
+		
+		}
+		
 	}
 
 	changeMeter(value: number) {
@@ -270,8 +280,6 @@ export default class MainScene extends ORE.BaseScene {
 		if( !obj ) return;
 
 		if( obj == this.targetObj ) return;
-
-		if( name == 'rounge' ) name = 'lounge';
 
 		if( !this.transforms[name] ){
 
