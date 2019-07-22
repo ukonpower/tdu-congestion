@@ -27,7 +27,8 @@ export default class TouchUI extends THREE.Object3D{
             vertexShader: vert,
             fragmentShader: frag,
             uniforms: this.uni,
-            transparent: true
+            transparent: true,
+            depthTest: false
         });
         
         let plane = new THREE.Mesh( geo, mat );
